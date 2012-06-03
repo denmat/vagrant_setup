@@ -37,35 +37,3 @@ namespace :vagrant_setup do
   desc 'complete all vagrant setup tasks'
   task :run => [ :set_hostname, :add_admin_group, :add_user, :set_sudoers, :tweak_sshd ]
 end
-
-namespace :vagrant_init do
-  
-  desc 'create project dir, add box and initiates the project'
-  task :create_project, :project, :box_name, :box_url do |t, args|
-    Dir.chdir('../')
-    Dir.mkdir(args[:project], 0750)
-    Dir.chdir(args[:project])
-    %x(vagrant box add args[:box_name] args[:box_url])
-    %x(vagrant init args[:box_name])
-    Dir.mkdir("shared_folder", 0750)
-    Dir.mkdir('puppet_manifests', 0750)
-    Dir.mkdir('puppet_modules', 0750)
-    Dir.mkdir('puppet_modules_private', 0750)
-   end
-
-#  desc 'Setup your Vagrant environment'
-#  task :create_vagrant_dirs do
-#    Dir.mkdir("shared_folder", 0750)
-#  end
-
-#  desc 'setup puppet directories'
-#  task :create_puppet_dirs do 
-#    Dir.mkdir('puppet_manifests', 0750)
-#    Dir.mkdir('puppet_modules', 0750)
-#    Dir.mkdir('puppet_modules_private', 0750)
-#  end
-
-#  desc 'create all directories'
-#  task :run => [ :create_project, :create_vagrant_dirs, :create_puppet_dirs ]
- 
-end
