@@ -19,4 +19,12 @@ namespace :project_setup do
     end
   end
 
+  desc 'puppet master checkout'
+  task :puppet_checkout, :project  do |t, args|
+    Dir.chdir("../projects/#{args[:project]}/shared_folder") do
+      Rake::Task['git:git_checkout'].invoke('puppet_master')
+      Rake::Task['git:git_init_submod'].invoke
+      Rake::Task['git:git_update_submod'].invoke
+    end
+  end
 end
